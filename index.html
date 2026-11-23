@@ -35,6 +35,9 @@ header{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid 
 .mnav.on{display:block}
 .mnav a{display:block;padding:14px 20px;border-bottom:1px solid var(--line);font-weight:700}
 /* 히어로 */
+.introv{position:relative;max-width:960px;margin:18px auto 0;border-radius:14px;overflow:hidden;background:#010413;box-shadow:0 8px 28px rgba(0,19,115,.25);aspect-ratio:16/9}
+.introv video{width:100%;height:100%;display:block;object-fit:cover}
+.introv button{position:absolute;right:10px;top:10px;border:0;background:rgba(0,19,115,.88);color:#fff;font:700 14px Pretendard,"Malgun Gothic",sans-serif;padding:10px 16px;border-radius:24px;cursor:pointer}
 .hero{text-align:center;padding:24px 0 14px}
 .hero h1{font-size:24px;line-height:1.35;font-weight:800;letter-spacing:-.5px}
 .hero h1 em{font-style:normal;color:var(--blue)}
@@ -221,6 +224,7 @@ footer .fl{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px;font-weight:7
  <div class="wrap">
   <h1>포스·키오스크·카드단말기<br>매장에 필요한 건 <em>포스리버</em></h1>
   <p>기기 선택부터 설치, 설치 후 A/S까지 전화 한 통으로 상담하세요. 설치는 전국 가능합니다.</p>
+  <div class="introv"><video id="iv" src="intro.mp4" poster="intro_poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="포스리버 소개 영상"></video><button type="button" id="ivb" onclick="var v=document.getElementById('iv');v.muted=!v.muted;if(!v.muted){v.currentTime=0;v.play()}this.textContent=v.muted?'소리 켜기':'소리 끄기'">소리 켜기</button></div>
  </div>
 </div>
 
