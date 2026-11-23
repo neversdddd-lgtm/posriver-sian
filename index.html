@@ -122,11 +122,14 @@ details.more[open]>summary:after{content:"︿"}
 .chips span{background:#eef2f8;border-radius:30px;padding:7px 12px;font-size:13px;font-weight:700}
 /* 상세 사양 (접기) */
 .spec{border:1px solid var(--line);border-radius:14px;margin-bottom:10px;background:#fff}
-.spec>summary{padding:16px 16px;cursor:pointer;list-style:none;font-weight:800;font-size:17px}
+.spec>summary{padding:12px 38px 12px 12px;cursor:pointer;list-style:none;display:flex;gap:12px;align-items:center;position:relative}
 .spec>summary::-webkit-details-marker{display:none}
-.spec>summary:after{content:"﹀";float:right;color:var(--sub);font-weight:400}
+.spec>summary:after{content:"﹀";position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--sub);font-weight:400}
 .spec[open]>summary:after{content:"︿"}
-.spec>summary small{display:block;font-weight:500;color:var(--sub);font-size:13px;margin-top:2px;padding-right:20px}
+.spec .th{flex:0 0 84px;width:84px;height:84px;object-fit:contain;background:#f3f6fb;border-radius:10px;border:1px solid var(--line)}
+.spec .st{display:flex;flex-direction:column;gap:2px;min-width:0}
+.spec .st b{font-size:16px;line-height:1.3}
+.spec .st i{font-style:normal;font-size:12.5px;color:var(--sub);line-height:1.4}
 .spec .body{padding:0 16px 18px}
 .pics{margin-bottom:14px}
 .pics img{border:1px solid var(--line);border-radius:12px;width:100%;background:#fff}
@@ -319,17 +322,17 @@ footer .fl{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px;font-weight:7
 
 <!-- 상세 사양 (눌러서 펼침) -->
 <section id="specs" style="padding-top:0"><div class="wrap">
- <div class="center"><div class="eyebrow">상품 상세</div><h2 class="t">상품별 사양을 눌러서 확인하세요</h2></div>
+ <div class="center"><div class="eyebrow">상품 상세</div><h2 class="t">상품별 사양을 눌러서 확인하세요</h2><p class="lead" style="margin-bottom:0">누르면 상세 사양과 사양표 이미지가 펼쳐집니다.</p></div>
  <div style="margin-top:14px">
 
- <details class="spec" id="d-sjk"><summary>SJK170B 키오스크<small>SJK170B-CMC 현금&amp;카드 겸용 / SJK170B-OCS 카드 전용 · 17인치</small></summary><div class="body">
+ <details class="spec" id="d-sjk"><summary><img class="th" src="img/pr/pc_sjk_01.png" alt="" loading="lazy"><span class="st"><b>SJK170B 키오스크</b><i>17인치 · CMC 현금&amp;카드 겸용 / OCS 카드 전용</i><i>2D스캐너 내장, 카카오페이 결제 가능</i><i>무인편의점·아이스크림 할인점 추천</i></span></summary><div class="body">
   <div class="pics rail"><img src="img/pr/pc_sjk_01.png" alt="" loading="lazy"><img src="img/pr/pc_sjk_02.png" alt="" loading="lazy"><img src="img/pr/pc_sjkocs_01.png" alt="SJK170B-OCS" loading="lazy" style="background:#222"></div>
   <ul class="chk"><li>2D스캐너 내장 (무인편의점·아이스크림 할인점 등 유통매장 추천, 카카오페이 결제 가능)</li><li>CMC: 지폐 3종·동전 2종(100원, 500원) 현금결제 가능</li><li>누구나 쉽게 영수증 용지 교체, 공간 제약 없는 콤팩트 사이즈</li><li>OCS: 슬림·심플 디자인, 벽걸이 타입 적용 가능</li></ul>
   <details class="more"><summary>SJK170B-OCS 사양표 이미지</summary><div class="one" style="padding-bottom:14px"><img src="img/pr/pc_sjkocs_t.jpg" alt="SJK170B-OCS 사양표" loading="lazy"></div></details>
   <a class="cta" href="tel:01039549183">이 상품 전화 문의 010-3954-9183</a>
  </div></details>
 
- <details class="spec" id="d-psk"><summary>PSK215A 키오스크<small>PSK215A-CM(현금&amp;카드 겸용) / PSK215A-C(카드 전용) · 21.5인치 FULL HD</small></summary><div class="body">
+ <details class="spec" id="d-psk"><summary><img class="th" src="img/new/psk_kiosk.jpg" alt="" loading="lazy"><span class="st"><b>PSK215A 키오스크</b><i>21.5인치 FULL HD · 스탠드형</i><i>CM 현금&amp;카드 겸용 / C 카드 전용</i><i>적외선 10포인트 멀티 터치</i></span></summary><div class="body">
   <table>
    <tr><th>화면</th><td>21.5" LED PANEL (FULL HD 1920x1080)</td></tr>
    <tr><th>터치</th><td>적외선(IR-Touch) 10포인트 멀티</td></tr>
@@ -345,19 +348,19 @@ footer .fl{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px;font-weight:7
   <a class="cta" href="tel:01039549183">이 상품 전화 문의 010-3954-9183</a>
  </div></details>
 
- <details class="spec" id="d-hit"><summary>HIT 포스기<small>카운터용 포스</small></summary><div class="body">
+ <details class="spec" id="d-hit"><summary><img class="th" src="img/new/hit_item.jpg" alt="" loading="lazy"><span class="st"><b>HIT 포스기</b><i>카운터용 일체형 포스</i><i>사양표는 펼쳐서 확인하세요</i></span></summary><div class="body">
   <div class="one"><img src="img/pr/pc_hit_item_01.jpg" alt="" loading="lazy"></div>
   <details class="more"><summary>HIT 사양표 이미지</summary><div class="one" style="padding-bottom:14px"><img src="img/pr/hit_table.jpg" alt="HIT 사양표" loading="lazy"></div></details>
   <a class="cta" href="tel:01039549183">이 상품 전화 문의 010-3954-9183</a>
  </div></details>
 
- <details class="spec" id="d-apexa"><summary>APEXA-G 포스기<small>평면 터치 포스</small></summary><div class="body">
+ <details class="spec" id="d-apexa"><summary><img class="th" src="img/new/apexa_01.jpg" alt="" loading="lazy"><span class="st"><b>APEXA-G 포스기</b><i>평면 터치 포스</i><i>사양표는 펼쳐서 확인하세요</i></span></summary><div class="body">
   <div class="pics rail"><img src="img/new/apexa_01.jpg" alt="" loading="lazy"><img src="img/new/apexa_03.jpg" alt="" loading="lazy"></div>
   <details class="more"><summary>APEXA-G 사양표 이미지</summary><div class="one" style="padding-bottom:14px"><img src="img/pr/apexa_table.jpg" alt="APEXA-G 사양표" loading="lazy"></div></details>
   <a class="cta" href="tel:01039549183">이 상품 전화 문의 010-3954-9183</a>
  </div></details>
 
- <details class="spec" id="d-bst"><summary>BST · POS TS-201<small>모델 TS-201 · 15.1인치 · 화이트 / 블랙</small></summary><div class="body">
+ <details class="spec" id="d-bst"><summary><img class="th" src="img/new/bts_02.jpg" alt="" loading="lazy"><span class="st"><b>BST · POS TS-201</b><i>15.1인치 터치 · 화이트 / 블랙</i><i>Intel Celeron N97 / J6412, Core i3/i5/i7</i><i>Windows 10/11 IoT / Linux</i></span></summary><div class="body">
   <div class="pics rail"><img src="img/ts201_main.jpg" alt="" loading="lazy"><img src="img/ts201_color.jpg" alt="" loading="lazy"></div>
   <table>
    <tr><th>프로세서</th><td>Intel Celeron N97 / J6412, Intel Core 11th i3/i5/i7</td></tr>
@@ -374,20 +377,20 @@ footer .fl{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px;font-weight:7
   <a class="cta" href="tel:01039549183">이 상품 전화 문의 010-3954-9183</a>
  </div></details>
 
- <details class="spec" id="d-n250"><summary>포스기 N250<small>모델 N250</small></summary><div class="body">
+ <details class="spec" id="d-n250"><summary><img class="th" src="img/new/n250_main.jpg" alt="" loading="lazy"><span class="st"><b>포스기 N250</b><i>모델 N250</i><i>Intel N97 CPU 탑재</i><i>팬리스 방열 구조</i></span></summary><div class="body">
   <div class="pics rail"><img src="img/new/n250_main.jpg" alt="" loading="lazy"><img src="img/n250_cpu.jpg" alt="" loading="lazy"></div>
   <ul class="chk"><li>Intel N97 CPU 탑재 (이미지 표기: 기존 E-200/E-250 대비 34% 성능 향상)</li><li>팬리스 방열 구조</li></ul>
   <details class="more"><summary>디스플레이 옵션 이미지</summary><div class="one" style="padding-bottom:14px"><img src="img/imu_b.jpg" alt="디스플레이 옵션" loading="lazy"></div></details>
   <a class="cta" href="tel:01039549183">이 상품 전화 문의 010-3954-9183</a>
  </div></details>
 
- <details class="spec" id="d-nc8000"><summary>나이스정보통신 유선 카드단말기<small>모델 NC-8000QN(PKG) · 애플페이, NFC 결제 가능</small></summary><div class="body">
+ <details class="spec" id="d-nc8000"><summary><img class="th" src="img/nc8000_main.jpg" alt="" loading="lazy"><span class="st"><b>나이스정보통신 유선 카드단말기</b><i>모델 NC-8000QN(PKG)</i><i>IC 카드 · 애플페이(NFC) · QR/바코드 결제</i></span></summary><div class="body">
   <div class="one"><img src="img/nc8000_main.jpg" alt="" loading="lazy" style="max-width:420px;margin:0 auto"></div>
   <ul class="chk" style="margin-top:12px"><li>IC 카드 결제</li><li>애플페이(NFC) 결제</li><li>QR/바코드 결제</li><li>WiFi 연결 가능 (이미지 표기)</li></ul>
   <a class="cta" href="tel:01039549183">이 상품 전화 문의 010-3954-9183</a>
  </div></details>
 
- <details class="spec" id="d-connect"><summary>네이버 커넥트 결제기<small>카드·스마트폰 없이도 결제, 모든 결제방식 지원</small></summary><div class="body">
+ <details class="spec" id="d-connect"><summary><img class="th" src="img/connect_p1.jpg" alt="" loading="lazy"><span class="st"><b>네이버 커넥트 결제기</b><i>카드·스마트폰 없이도 결제, 모든 결제방식 지원</i><i>페이스사인 · QR · 삼성페이 · 애플페이</i></span></summary><div class="body">
   <div class="one"><img src="img/connect_p1.jpg" alt="" loading="lazy"><img src="img/connect_p2.jpg" alt="" loading="lazy"></div>
   <ul class="chk" style="margin-top:12px"><li>페이스사인, QR/바코드, 삼성페이, 애플페이 결제</li><li>쿠폰 노출, 키워드 리뷰 등록, 포인트 적립을 기기에서 바로</li><li>결제 직후 네이버 리뷰로 이어지는 단말기 (네이버페이 발표 기준)</li></ul>
   <a class="cta" href="tel:01039549183">이 상품 전화 문의 010-3954-9183</a>
