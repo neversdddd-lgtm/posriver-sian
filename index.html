@@ -37,7 +37,8 @@ header{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid 
 /* 히어로 */
 .introv{position:relative;max-width:960px;margin:18px auto 0;border-radius:14px;overflow:hidden;background:#010413;box-shadow:0 8px 28px rgba(0,19,115,.25);aspect-ratio:16/9}
 .introv video{width:100%;height:100%;display:block;object-fit:cover}
-.introv button{position:absolute;right:10px;top:10px;border:0;background:rgba(0,19,115,.88);color:#fff;font:700 14px Pretendard,"Malgun Gothic",sans-serif;padding:10px 16px;border-radius:24px;cursor:pointer}
+.ivbw{text-align:center;margin-top:10px}
+.ivbw button{border:0;background:rgba(0,19,115,.88);color:#fff;font:700 14px Pretendard,"Malgun Gothic",sans-serif;padding:10px 22px;border-radius:24px;cursor:pointer}
 .hero{text-align:center;padding:24px 0 14px}
 .hero h1{font-size:24px;line-height:1.35;font-weight:800;letter-spacing:-.5px}
 .hero h1 em{font-style:normal;color:var(--blue)}
@@ -202,6 +203,7 @@ footer .fl{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px;font-weight:7
  footer{padding:34px 0 120px;font-size:13px}
  .kflex{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
 }
+@media(max-width:767px){.hero{padding:14px 0 8px}.hero h1{font-size:20px}.hero p{font-size:12.5px;margin-top:6px}.introv{margin:10px -20px 0;border-radius:0;box-shadow:none}.slide .tx{padding:12px 16px 0}.slide .tx h2{font-size:17px}.slide .tx small{margin-bottom:5px}.slide .tx p{font-size:12px;margin-top:4px}.slide .tx a{margin-top:4px;font-size:13px}.slide .im{padding:2px 16px 0}.slide .im img{max-height:84px}.slide.s3 .im img{max-height:72px;margin-bottom:8px}}
 </style>
 </head>
 <body>
@@ -224,7 +226,8 @@ footer .fl{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:10px;font-weight:7
  <div class="wrap">
   <h1>포스·키오스크·카드단말기<br>매장에 필요한 건 <em>포스리버</em></h1>
   <p>기기 선택부터 설치, 설치 후 A/S까지 전화 한 통으로 상담하세요. 설치는 전국 가능합니다.</p>
-  <div class="introv"><video id="iv" src="intro.mp4" poster="intro_poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="포스리버 소개 영상"></video><button type="button" id="ivb" onclick="var v=document.getElementById('iv');v.muted=!v.muted;if(!v.muted){v.currentTime=0;v.play()}this.textContent=v.muted?'소리 켜기':'소리 끄기'">소리 켜기</button></div>
+  <div class="introv"><video id="iv" src="intro.mp4" poster="intro_poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="포스리버 소개 영상"></video></div>
+  <div class="ivbw"><button type="button" id="ivb" onclick="var v=document.getElementById('iv');v.muted=!v.muted;if(!v.muted){v.currentTime=0;v.play()}this.textContent=v.muted?'소리 켜기':'소리 끄기'">소리 켜기</button></div>
  </div>
 </div>
 
