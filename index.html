@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>포스리버 | 포스·키오스크·카드단말기</title>
+<style>
+:root{--blue:#0069ea;--navy:#001373;--ink:#111827;--sub:#5b6577;--bg:#f7faff;--line:#e3e8f0;--dark:#010413}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{font-family:Pretendard,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:var(--ink);background:#fff;line-height:1.5;padding-bottom:84px;word-break:keep-all}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+/* 상단 두 칸 띠 (페이히어 방식: 파랑 / 검정) */
+.top2{display:grid;grid-template-columns:1fr 1fr;font-size:13px;font-weight:700;text-align:center}
+.top2 a{padding:14px 8px;color:#fff}
+.top2 .l{background:var(--blue)}
+.top2 .r{background:#001373}
+.top2 b{color:#ffe14d;white-space:nowrap}
+@media(max-width:480px){.top2{font-size:11.5px}.top2 a{padding:12px 4px;display:flex;flex-direction:column;gap:2px}}
+/* GNB */
+header{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--line)}
+.gnb{display:flex;align-items:center;height:62px;gap:28px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:21px;color:var(--ink)}
+.logo i{font-style:normal;background:var(--blue);color:#fff;font-size:13px;font-weight:800;padding:4px 7px;border-radius:6px;letter-spacing:.5px}
+.menu{display:none;gap:26px;font-size:15px}
+.menu a:hover{color:var(--blue)}
+.gnb .sp{flex:1}
+.gbtn{display:none;font-weight:700;font-size:14px;padding:9px 16px;border-radius:6px}
+.gbtn.o{border:1px solid var(--blue);color:var(--blue)}
+.gbtn.f{background:var(--blue);color:#fff}
+.burger{border:0;background:none;font-size:26px;line-height:1}
+.mnav{display:none;background:#fff;border-top:1px solid var(--line)}
+.mnav.on{display:block}
+.mnav a{display:block;padding:15px 20px;border-bottom:1px solid var(--line);font-weight:700}
+/* 히어로 */
+.hero{text-align:center;padding:44px 0 26px}
+.hero h1{font-size:28px;line-height:1.4;font-weight:800;letter-spacing:-.5px}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero p{color:var(--sub);margin-top:10px;font-size:15px}
+/* 배너 캐러셀 */
+.slides{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 20px 8px;scrollbar-width:none}
+.slides::-webkit-scrollbar{display:none}
+.slide{flex:0 0 88%;scroll-snap-align:center;background:var(--dark);color:#fff;border-radius:22px;overflow:hidden;display:grid;grid-template-columns:1fr;min-height:420px;position:relative}
+.slide .tx{padding:30px 26px 0;z-index:1}
+.slide .tx small{display:inline-block;font-size:12px;font-weight:700;background:#1b2750;color:#7fb4ff;border-radius:20px;padding:4px 10px;margin-bottom:12px}
+.slide .tx h2{font-size:25px;line-height:1.35;font-weight:800}
+.slide .tx h2 em{font-style:normal;color:#35d6ff}
+.slide .tx a{display:inline-block;margin-top:14px;font-weight:700;font-size:14px}
+.slide .im{display:flex;align-items:flex-end;justify-content:center;padding:10px 20px 0;min-height:210px}
+.slide .im img{max-height:230px;object-fit:contain}
+.slide.s2{background:#0a1f5c}
+.slide.s3{background:#0b0b0b}
+.slide.s3 .im img{background:#fff;border-radius:10px;max-height:200px;margin-bottom:20px}
+/* 하단 고정 상담바 */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;justify-content:center;padding:0 10px 10px;pointer-events:none}
+.bar form{pointer-events:auto;width:100%;max-width:820px;background:rgba(10,12,22,.94);color:#fff;border-radius:16px;padding:12px 14px;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;box-shadow:0 8px 28px rgba(0,0,0,.28)}
+.bar .t{display:none;font-weight:800;font-size:16px;line-height:1.35}
+.bar .t b{color:#4db0ff}
+.bar input[type=tel]{border:2px solid var(--blue);border-radius:8px;padding:12px;font-size:16px;width:100%}
+.bar button{background:var(--blue);color:#fff;border:0;border-radius:8px;padding:13px 16px;font-weight:800;font-size:15px;cursor:pointer}
+.bar label{grid-column:1/-1;font-size:12px;color:#c7cde0}
+.bar a.tel{grid-column:1/-1;text-align:center;font-weight:800;color:#ffe14d;font-size:14px}
+/* 아이콘 4칸 */
+.ico4{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:26px 0 8px}
+.ico4 a{background:var(--bg);border-radius:14px;padding:22px 10px;text-align:center;font-weight:800;font-size:15px;border:1px solid var(--line)}
+.ico4 a span{display:block;font-size:30px;margin-bottom:6px}
+.ico4 a:hover{border-color:var(--blue);color:var(--blue)}
+/* 공통 섹션 */
+section{padding:46px 0}
+.eyebrow{color:var(--blue);font-weight:800;font-size:14px;margin-bottom:6px}
+h2.t{font-size:26px;line-height:1.4;font-weight:800;letter-spacing:-.5px;margin-bottom:8px}
+h2.t em{font-style:normal;color:var(--blue)}
+.lead{color:var(--sub);font-size:15px;margin-bottom:22px}
+.center{text-align:center}
+/* 두 칸 큰 소개 */
+.two{display:grid;gap:22px;align-items:center}
+.two .pic{background:var(--bg);border-radius:20px;padding:22px;display:flex;align-items:center;justify-content:center;min-height:260px}
+.two .pic img{max-height:300px;object-fit:contain}
+.flist{list-style:none}
+.flist li{padding:14px 0;border-bottom:1px solid var(--line)}
+.flist b{display:block;font-size:16px}
+.flist span{color:var(--sub);font-size:14px}
+/* 카드 */
+.cards{display:grid;grid-template-columns:1fr;gap:14px}
+.card{background:var(--bg);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+.card .im{aspect-ratio:3/2;background:#eef3fb;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.card .im img{width:100%;height:100%;object-fit:contain}
+.card .im.cover img{object-fit:cover}
+.card .tx{padding:18px 18px 20px}
+.card h3{font-size:18px}
+.card p{color:var(--sub);font-size:14px;margin:4px 0 14px}
+.card .go{display:flex;gap:8px}
+.card .go a{flex:1;text-align:center;font-weight:700;font-size:14px;padding:11px;border-radius:8px;border:1px solid var(--line);background:#fff}
+.card .go a.p{background:var(--blue);border-color:var(--blue);color:#fff}
+/* 탭(추천 조합) */
+.tabs{display:flex;gap:8px;overflow-x:auto;margin:6px 0 18px;scrollbar-width:none}
+.tabs button{flex:0 0 auto;border:0;background:#eef2f8;color:var(--sub);font-weight:700;font-size:14px;padding:10px 16px;border-radius:30px;cursor:pointer}
+.tabs button.on{background:var(--blue);color:#fff}
+.pane{display:none}.pane.on{display:block}
+.chk{list-style:none;font-size:14px;margin:8px 0 14px}
+.chk li{padding-left:20px;position:relative;margin:4px 0}
+.chk li:before{content:"✓";position:absolute;left:0;color:var(--blue);font-weight:800}
+/* 어두운 띠 3칸 */
+.dark{background:var(--dark);color:#fff}
+.dark h2.t{color:#fff}.dark .lead{color:#aab4d0}
+.tri{display:grid;gap:14px}
+.tri div{background:#0d2a78;border-radius:18px;padding:24px}
+.tri b{display:block;font-size:18px;margin-bottom:6px}
+.tri span{font-size:14px;color:#c9d6ff}
+.tri .n{font-size:34px;font-weight:800;color:#35d6ff;display:block;margin-bottom:4px}
+/* 납품사례 */
+.cases{display:grid;grid-template-columns:1fr;gap:14px}
+.cases figure{border-radius:16px;overflow:hidden;background:var(--bg)}
+.cases img{width:100%;aspect-ratio:1/1;object-fit:cover}
+.cases figcaption{padding:12px 14px;font-weight:700;font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chips span{background:#eef2f8;border-radius:30px;padding:8px 14px;font-size:14px;font-weight:700}
+/* 상세 */
+.detail{border-top:1px solid var(--line)}
+.detail h3{font-size:24px;margin-bottom:4px}
+.detail .mod{color:var(--sub);font-size:14px;margin-bottom:16px}
+.pics{display:grid;gap:12px;margin-bottom:16px}
+.pics img{border:1px solid var(--line);border-radius:12px;width:100%;background:#fff}
+.pics.dk img{background:#000;border:0}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-bottom:16px}
+th,td{border-top:1px solid var(--line);padding:10px 8px;text-align:left;vertical-align:top}
+th{width:30%;background:var(--bg);color:var(--navy)}
+.cta{display:block;text-align:center;background:var(--blue);color:#fff;font-weight:800;padding:15px;border-radius:10px;margin-top:6px}
+/* FAQ */
+.faq details{border-bottom:1px solid var(--line);padding:16px 4px}
+.faq summary{font-weight:700;cursor:pointer;list-style:none}
+.faq summary:after{content:"﹀";float:right;color:var(--sub)}
+.faq p{color:var(--sub);font-size:14px;margin-top:10px}
+/* 문의 박스 */
+.ctab{background:var(--bg);border-radius:22px;padding:34px 20px;text-align:center}
+.ctab .num{display:block;font-size:34px;font-weight:800;color:var(--navy);margin:8px 0 6px}
+.ctab .sm{color:var(--sub);font-size:14px;margin-bottom:16px}
+.btn{display:inline-block;background:var(--blue);color:#fff;font-weight:800;padding:14px 26px;border-radius:10px;margin:4px}
+.btn.y{background:#ffd23f;color:#222}
+.hours{margin-top:16px;font-size:14px;color:var(--sub)}
+/* 푸터 */
+footer{background:#f1f3f7;color:#6b7385;padding:34px 0 120px;font-size:13px;line-height:1.8}
+footer b{color:#2b3140}
+footer .fl{display:flex;flex-wrap:wrap;gap:14px;margin-bottom:12px;font-weight:700;color:#2b3140}
+/* 오른쪽 둥둥 버튼 */
+.float{position:fixed;right:12px;bottom:150px;z-index:45;display:grid;gap:8px}
+.float a{width:62px;height:62px;border-radius:14px;background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.18);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--blue)}
+.float a span{font-size:20px;line-height:1}
+.float a.k{background:#fee500;color:#222}
+@media(min-width:768px){
+ body{padding-bottom:0}
+ .gnb{height:68px}.menu{display:flex}.gbtn{display:block}.burger{display:none}.mnav{display:none!important}
+ .hero{padding:70px 0 34px}.hero h1{font-size:44px}.hero p{font-size:17px}
+ .slides{padding:0 max(20px,calc((100vw - 1200px)/2));gap:20px}
+ .slide{flex:0 0 min(1200px,86vw);grid-template-columns:1.1fr 1fr;min-height:480px;align-items:center}
+ .slide .tx{padding:50px 0 50px 56px}.slide .tx h2{font-size:34px}
+ .slide .im{min-height:100%;padding:30px 40px}.slide .im img{max-height:380px}
+ .slide.s3 .im img{max-height:330px;margin-bottom:0}
+ .bar{padding-bottom:18px}
+ .bar form{grid-template-columns:1.2fr 1fr auto;padding:16px 22px;gap:12px}
+ .bar .t{display:block}.bar label{grid-column:2/4}.bar a.tel{display:none}
+ .ico4{grid-template-columns:repeat(4,1fr);gap:16px}
+ section{padding:80px 0}
+ h2.t{font-size:36px}.lead{font-size:17px}
+ .two{grid-template-columns:1fr 1fr;gap:56px}
+ .two.rev .pic{order:2}
+ .cards{grid-template-columns:repeat(3,1fr);gap:20px}.cards.c2{grid-template-columns:repeat(2,1fr)}
+ .tri{grid-template-columns:repeat(3,1fr);gap:20px}
+ .cases{grid-template-columns:repeat(3,1fr);gap:20px}
+ .pics{grid-template-columns:1fr 1fr}.pics.one{grid-template-columns:1fr}
+ .float{bottom:110px;right:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="top2"><a class="l" href="#contact">견적·설치 무료 상담 <b>1551-6299</b></a><a class="r" href="#as">전국 설치 · A/S 접수 <b>1670-5499</b></a></div>
+
+<header>
+ <div class="wrap gnb">
+  <a class="logo" href="#top"><i>POS</i>포스리버</a>
+  <nav class="menu"><a href="#pos">포스기</a><a href="#kiosk">키오스크</a><a href="#pay">카드단말기</a><a href="#best">업종별 추천</a><a href="#cases">납품사례</a><a href="#about">회사소개</a></nav>
+  <div class="sp"></div>
+  <a class="gbtn o" href="#as">A/S 안내</a><a class="gbtn f" href="#contact">견적 상담</a>
+  <button class="burger" aria-label="메뉴" onclick="document.getElementById('m').classList.toggle('on')">&#9776;</button>
+ </div>
+ <div class="mnav" id="m" onclick="this.classList.remove('on')"><a href="#pos">포스기</a><a href="#kiosk">키오스크</a><a href="#pay">카드단말기</a><a href="#best">업종별 추천</a><a href="#cases">납품사례</a><a href="#as">A/S 안내</a><a href="#about">회사소개</a></div>
+</header>
+
+<a id="top"></a>
+<div class="hero">
+ <div class="wrap">
+  <h1>포스·키오스크·카드단말기<br>매장에 필요한 건 <em>포스리버</em></h1>
+  <p>기기 선택부터 설치, 설치 후 A/S까지 전화 한 통으로 상담하세요. 설치는 전국 가능합니다.</p>
+ </div>
+</div>
+
+<div class="slides" aria-label="추천 상품">
+ <div class="slide">
+  <div class="tx"><small>KIOSK SJK 시리즈</small><h2>무인 매장 인건비,<br><em>키오스크</em>로 줄이세요</h2><p style="color:#aab4d0;margin-top:8px;font-size:14px">현금 · 신용카드 · 모바일 결제 지원</p><a href="#d-sjk">자세히 보기 &rarr;</a></div>
+  <div class="im"><img src="img/pr/pc_sjkocs_02.png" alt="SJK170B-OCS 키오스크"></div>
+ </div>
+ <div class="slide s2">
+  <div class="tx"><small>POS BST</small><h2>터치 한 번,<br><em>포스기</em>로 매장 운영</h2><p style="color:#c9d6ff;margin-top:8px;font-size:14px">윈도우 포스 · 15인치 터치스크린</p><a href="#d-bst">자세히 보기 &rarr;</a></div>
+  <div class="im"><img src="img/pr/pc_bts_item_01.png" alt="BST 포스기" style="border-radius:14px"></div>
+ </div>
+ <div class="slide s3">
+  <div class="tx"><small>네이버 커넥트</small><h2>카드·스마트폰 없이도,<br><em>모든 결제방식</em> 지원</h2><p style="color:#aab4d0;margin-top:8px;font-size:14px">페이스사인 · QR · 삼성페이 · 애플페이</p><a href="#d-connect">자세히 보기 &rarr;</a></div>
+  <div class="im"><img src="img/connect_p1.jpg" alt="네이버 커넥트 결제기"></div>
+ </div>
+</div>
+
+<div class="wrap">
+ <div class="ico4">
+  <a href="#pay"><span>💳</span>카드 단말기</a>
+  <a href="#pos"><span>🖥️</span>포스기</a>
+  <a href="#kiosk"><span>🧾</span>키오스크</a>
+  <a href="#cases"><span>🏪</span>납품사례</a>
+ </div>
+</div>
+
+<!-- 포스 -->
+<section id="pos"><div class="wrap">
+ <div class="center"><div class="eyebrow">POS 포스기</div><h2 class="t">어떤 매장이든<br><em>알맞은 포스기</em>를 골라 드려요</h2><p class="lead">가격은 매장 환경에 맞춰 견적으로 안내해 드립니다.</p></div>
+ <div class="cards">
+  <div class="card"><div class="im"><img src="img/pr/pc_hit_item.jpg" alt="HIT 포스기"></div><div class="tx"><h3>HIT</h3><p>카운터용 일체형 포스. 사양표를 확인하세요.</p><div class="go"><a href="#d-hit">자세히</a><a class="p" href="tel:15516299">전화 문의</a></div></div></div>
+  <div class="card"><div class="im"><img src="img/pr/pc_bts_item_02.png" alt="BST 포스기"></div><div class="tx"><h3>BST (TS-201)</h3><p>15.1인치 터치 · 화이트/블랙</p><div class="go"><a href="#d-bst">자세히</a><a class="p" href="tel:15516299">전화 문의</a></div></div></div>
+  <div class="card"><div class="im"><img src="img/pr/pc_apexa_item_01.jpg" alt="APEXA-G 포스기"></div><div class="tx"><h3>APEXA-G</h3><p>평면 터치 포스. 사양표를 확인하세요.</p><div class="go"><a href="#d-apexa">자세히</a><a class="p" href="tel:15516299">전화 문의</a></div></div></div>
+  <div class="card"><div class="im"><img src="img/n250_main.jpg" alt="포스기 N250"></div><div class="tx"><h3>포스기 N250</h3><p>Intel N97 탑재 · 팬리스</p><div class="go"><a href="#d-n250">자세히</a><a class="p" href="tel:15516299">전화 문의</a></div></div></div>
+ </div>
+</div></section>
+
+<!-- 키오스크 -->
+<section id="kiosk" style="background:var(--bg)"><div class="wrap">
+ <div class="two">
+  <div>
+   <div class="eyebrow">KIOSK 키오스크</div>
+   <h2 class="t">현금·카드·모바일,<br><em>한 대로</em> 결제까지</h2>
+   <p class="lead">비대면 선호 고객과 고정 인건비 부담 사이에서, 키오스크는 선택이 아니라 필수가 되고 있습니다.</p>
+   <ul class="flist">
+    <li><b>SJK170B-CMC · 17인치 현금&amp;카드 겸용</b><span>지폐 3종·동전 2종(100원/500원) 현금결제, 2D스캐너 내장</span></li>
+    <li><b>SJK170B-OCS · 17인치 카드 전용</b><span>작은 공간에 슬림하게, 벽걸이 타입 적용 가능</span></li>
+    <li><b>PSK215A-CM / PSK215A-C · 21.5인치</b><span>현금&amp;카드 겸용 / 카드 전용, 적외선 10포인트 터치</span></li>
+    <li><b>하나시스 키오스크 취급</b><span>기종·견적은 전화로 문의해 주세요</span></li>
+   </ul>
+  </div>
+  <div class="pic"><img src="img/pr/pc_sjkocs_01.png" alt="SJK 키오스크" style="background:#222;border-radius:14px"></div>
+ </div>
+ <div class="cards c2" style="margin-top:28px">
+  <div class="card"><div class="im" style="background:#fff"><img src="img/pr/pc_sjk_01.png" alt="SJK170B-CMC"></div><div class="tx"><h3>SJK170B-CMC</h3><p>무인매장 강력추천 · 현금&amp;카드 겸용 17인치</p><div class="go"><a href="#d-sjk">자세히</a><a class="p" href="tel:15516299">전화 문의</a></div></div></div>
+  <div class="card"><div class="im" style="background:#fff"><img src="img/pr/kiosk.jpg" alt="PSK215A 키오스크" style="object-fit:contain"></div><div class="tx"><h3>PSK215A 시리즈</h3><p>21.5인치 FULL HD · 스탠드형</p><div class="go"><a href="#d-psk">자세히</a><a class="p" href="tel:15516299">전화 문의</a></div></div></div>
+ </div>
+</div></section>
+
+<!-- 카드단말기 -->
+<section id="pay"><div class="wrap">
+ <div class="center"><div class="eyebrow">카드단말기 · 결제기</div><h2 class="t">나이스 · 토스 · 네이버 커넥트<br><em>모두 한곳에서</em> 상담받으세요</h2></div>
+ <div class="cards" style="margin-top:22px">
+  <div class="card"><div class="im"><img src="img/nc8000_main.jpg" alt="NC-8000QN"></div><div class="tx"><h3>나이스정보통신 유선 카드단말기</h3><p>NC-8000QN(PKG) · IC·애플페이(NFC)·QR/바코드 결제</p><div class="go"><a href="#d-nc8000">자세히</a><a class="p" href="tel:15516299">전화 문의</a></div></div></div>
+  <div class="card"><div class="im"><img src="img/connect_p1.jpg" alt="네이버 커넥트"></div><div class="tx"><h3>네이버 커넥트 결제기</h3><p>페이스사인·QR·삼성페이·애플페이, 결제 후 리뷰·쿠폰</p><div class="go"><a href="#d-connect">자세히</a><a class="p" href="tel:15516299">전화 문의</a></div></div></div>
+  <div class="card"><div class="im" style="padding:30px;text-align:center;font-weight:800;color:#3b6fe0;font-size:22px;background:#eef3fb">토스 결제단말기<br><span style="font-size:13px;font-weight:600;color:#5b6577">토스 프론트 · 토스 포스</span></div><div class="tx"><h3>토스 단말기</h3><p>토스 포스에서 모드를 바꿔 미니 키오스크로도 사용 (토스플레이스 안내 기준)</p><div class="go"><a href="https://tossplace.com/product/kiosk?type=frontKiosk" target="_blank" rel="noopener">공식 안내</a><a class="p" href="tel:15516299">전화 문의</a></div></div></div>
+ </div>
+</div></section>
+
+<!-- 업종별 추천 조합 -->
+<section id="best" style="background:var(--bg)"><div class="wrap">
+ <div class="center"><div class="eyebrow">업종별 추천</div><h2 class="t">사장님들이 많이 찾는<br><em>베스트 조합</em>을 추천해 드려요</h2></div>
+ <div class="tabs" id="tabs"><button class="on" data-p="p1">무인매장·아이스크림</button><button data-p="p2">카페·식당</button><button data-p="p3">키즈카페·시간제</button></div>
+ <div class="pane on" id="p1"><div class="cards c2"><div class="card"><div class="im cover"><img src="img/gpt/unmanned.jpg" alt="" onerror="this.parentNode.style.background='#e8eef8'"></div><div class="tx"><h3>무인편의점 · 아이스크림 할인점</h3><ul class="chk"><li>SJK170B 키오스크 (2D스캐너 내장)</li><li>카카오페이 결제 가능</li><li>벽걸이 타입 적용 가능(OCS)</li></ul><div class="go"><a class="p" href="tel:15516299">이 조합 문의</a></div></div></div><div class="card"><div class="im" style="background:#fff"><img src="img/pr/pc_sjk_01.png" alt="SJK170B-CMC"></div><div class="tx"><h3>SJK170B-CMC 현금&amp;카드 겸용</h3><p>유통매장 추천 모델. 지폐·동전 현금결제가 되는 모델입니다.</p><div class="go"><a href="#d-sjk">자세히</a></div></div></div></div></div>
+ <div class="pane" id="p2"><div class="cards c2"><div class="card"><div class="im cover"><img src="img/gpt/cafe.jpg" alt="" onerror="this.parentNode.style.background='#e8eef8'"></div><div class="tx"><h3>카페 · 식당</h3><ul class="chk"><li>포스기(BST·HIT·APEXA-G) + 카드단말기</li><li>키오스크 SJK/PSK 시리즈로 주문·결제</li><li>단말기: 나이스·토스·네이버 커넥트 중 선택</li></ul><div class="go"><a class="p" href="tel:15516299">이 조합 문의</a></div></div></div><div class="card"><div class="im" style="background:#010413"><img src="img/pr/pc_bts_item_01.png" alt="BST"></div><div class="tx"><h3>BST 포스 + 키오스크</h3><p>납품 사례: 숙명여대 블루베리커피숍, 다미만두 (POS+키오스크)</p><div class="go"><a href="#cases">납품사례 보기</a></div></div></div></div></div>
+ <div class="pane" id="p3"><div class="cards c2"><div class="card"><div class="im cover"><img src="img/gpt/kidscafe.jpg" alt="" onerror="this.parentNode.style.background='#e8eef8'"></div><div class="tx"><h3>키즈카페 · 스터디카페 · VR방</h3><ul class="chk"><li>시간제 과금 매장 전용 POS 솔루션 "AIR TIME"</li><li>RFID 태그 복합 결제, 멤버십 문자·알림톡</li></ul><div class="go"><a class="p" href="tel:15516299">이 조합 문의</a></div></div></div><div class="card"><div class="im" style="background:#eef3fb;font-weight:800;font-size:20px;color:#3b6fe0;padding:20px;text-align:center">푸드코트 · 프랜차이즈<br><span style="font-size:13px;color:#5b6577;font-weight:600">카운터포스 · 주방현황판 · DID 순번대기 · 키오스크 연동 / 본부관리 솔루션</span></div><div class="tx"><h3>푸드코트 · 다점포 관리</h3><p>프랜차이즈 본사는 본부관리 솔루션으로 다점포 매장을 관리할 수 있습니다.</p><div class="go"><a class="p" href="tel:15516299">이 조합 문의</a></div></div></div></div></div>
+</div></section>
+
+<!-- 왜 포스리버 -->
+<section class="dark"><div class="wrap">
+ <div class="center"><h2 class="t">설치만 하고 끝나지 않아요<br><em style="color:#35d6ff">기기부터 A/S까지</em> 한곳에서</h2><p class="lead">제조사 소개 자료 기준 내용입니다.</p></div>
+ <div class="tri" style="margin-top:24px">
+  <div><span class="n">74%</span><b>연 인건비 부담 감소</b><span>키오스크 도입 시 기대효과 (제조사 소개 기준)</span></div>
+  <div><span class="n">3단계</span><b>전화 → 원격 → 현장 A/S</b><span>고객센터 접수 후 전화·원격으로 먼저, 안 되면 현장 방문</span></div>
+  <div><span class="n">전국</span><b>단일망 A/S 네트워크</b><span>전국 유지보수 전문업체를 통해 서비스</span></div>
+ </div>
+</div></section>
+
+<!-- 납품사례 -->
+<section id="cases"><div class="wrap">
+ <div class="center"><div class="eyebrow">납품사례</div><h2 class="t">포스리버에서 <em>설치한 매장</em>입니다</h2></div>
+ <div class="cases" style="margin-top:22px">
+  <figure><img src="img/pr/result_img_19.jpg" alt="설치 매장"><figcaption>설치 현장 · 포스리버 납품</figcaption></figure>
+  <figure><img src="img/pr/result_img_01.jpg" alt="설치 매장"><figcaption>설치 현장 · POS+키오스크</figcaption></figure>
+  <figure><img src="img/pr/result_img_02.jpg" alt="설치 매장"><figcaption>설치 현장 · POS+키오스크</figcaption></figure>
+ </div>
+ <div class="chips"><span>무인아이스크림 프랜차이즈 본점</span><span>숙명여대 블루베리커피숍 (POS+키오스크)</span><span>다미만두 (POS+키오스크)</span></div>
+</div></section>
+
+<!-- 상세 -->
+<div class="wrap">
+ <section class="detail" id="d-sjk">
+  <h3>SJK170B 키오스크</h3><p class="mod">SJK170B-CMC 현금&amp;카드 겸용 / SJK170B-OCS 카드 전용 · 17인치</p>
+  <div class="pics"><img src="img/pr/pc_sjk_01.png" alt=""><img src="img/pr/pc_sjk_02.png" alt=""></div>
+  <ul class="chk"><li>2D스캐너 내장 (무인편의점·아이스크림 할인점 등 유통매장 추천, 카카오페이 결제 가능)</li><li>CMC: 지폐 3종·동전 2종(100원, 500원) 현금결제 가능</li><li>누구나 쉽게 영수증 용지 교체, 공간 제약 없는 콤팩트 사이즈</li><li>OCS: 슬림·심플 디자인, 벽걸이 타입 적용 가능</li></ul>
+  <div class="pics dk"><img src="img/pr/pc_sjkocs_01.png" alt="SJK170B-OCS"></div>
+  <div class="pics one"><img src="img/pr/pc_sjkocs_t.jpg" alt="SJK170B-OCS 사양표"></div>
+  <a class="cta" href="tel:15516299">이 상품 전화 문의 1551-6299</a>
+ </section>
+
+ <section class="detail" id="d-psk">
+  <h3>PSK215A 키오스크</h3><p class="mod">PSK215A-CM(현금&amp;카드 겸용) / PSK215A-C(카드 전용) · 21.5인치 FULL HD</p>
+  <table>
+   <tr><th>화면</th><td>21.5" LED PANEL (FULL HD 1920x1080)</td></tr>
+   <tr><th>터치</th><td>적외선(IR-Touch) 10포인트 멀티</td></tr>
+   <tr><th>CPU</th><td>인텔 J1900(기본) / 펜티엄 / i3 / i5 / i7 선택</td></tr>
+   <tr><th>메모리·저장</th><td>SoDIMM 4GB(최대 8GB) · mSATA SSD 64GB</td></tr>
+   <tr><th>OS</th><td>Windows 10 IoT / POSReady 7</td></tr>
+   <tr><th>영수증 프린터</th><td>3인치 80mm 감열 프린터</td></tr>
+   <tr><th>카드 리더기</th><td>각 VAN사 단말기 장착 가능(옵션), 여신금융협회 보안인증 IC 리더기</td></tr>
+   <tr><th>현금 모듈(CM)</th><td>지폐 3종 인식, 동전 500원 500개 또는 100원 800개</td></tr>
+   <tr><th>크기·무게</th><td>CM 368(W) x 1700(H) x 400(D) mm · 약 55kg / C(카드 전용) 350(W) x 800(H) x 80(D) mm</td></tr>
+  </table>
+  <p class="lead" style="font-size:12px">제조사 소개 자료 기준이며 구성은 변경될 수 있습니다.</p>
+  <a class="cta" href="tel:15516299">이 상품 전화 문의 1551-6299</a>
+ </section>
+
+ <section class="detail" id="d-hit">
+  <h3>HIT 포스기</h3><p class="mod">카운터용 포스</p>
+  <div class="pics one"><img src="img/pr/pc_hit_item_01.jpg" alt=""><img src="img/pr/hit_table.jpg" alt="HIT 사양표"></div>
+  <a class="cta" href="tel:15516299">이 상품 전화 문의 1551-6299</a>
+ </section>
+
+ <section class="detail" id="d-apexa">
+  <h3>APEXA-G 포스기</h3><p class="mod">평면 터치 포스</p>
+  <div class="pics"><img src="img/pr/pc_apexa_item_01.jpg" alt=""><img src="img/pr/pc_apexa_item_03.jpg" alt=""></div>
+  <div class="pics one"><img src="img/pr/apexa_table.jpg" alt="APEXA-G 사양표"></div>
+  <a class="cta" href="tel:15516299">이 상품 전화 문의 1551-6299</a>
+ </section>
+
+ <section class="detail" id="d-bst">
+  <h3>BST · POS TS-201</h3><p class="mod">모델 TS-201 · 15.1인치 · 화이트 / 블랙</p>
+  <div class="pics"><img src="img/ts201_main.jpg" alt=""><img src="img/ts201_color.jpg" alt=""></div>
+  <table>
+   <tr><th>프로세서</th><td>Intel Celeron N97 / J6412, Intel Core 11th i3/i5/i7</td></tr>
+   <tr><th>메모리</th><td>DDR4 8GB (최대 16GB) SODIMM</td></tr>
+   <tr><th>저장장치</th><td>2.5" SSD 128GB (최대 512GB)</td></tr>
+   <tr><th>디스플레이</th><td>15.1" TFT LCD 1024x768, 350cd/m2, 10포인트 정전식 터치</td></tr>
+   <tr><th>OS</th><td>Windows 10/11 IoT / Linux</td></tr>
+   <tr><th>옵션</th><td>보조 디스플레이 9.7", VFD 고객표시기, ID 리더, 벽걸이 브라켓</td></tr>
+   <tr><th>크기</th><td>364(W) x 340(H) x 210(D) mm</td></tr>
+   <tr><th>전원</th><td>60W 어댑터, DC 12V / 5A</td></tr>
+  </table>
+  <div class="pics one"><img src="img/ts201_spec.jpg" alt="TS-201 사양표"></div>
+  <div class="pics one"><img src="img/bst_feature.jpg" alt=""><img src="img/bst_parts.jpg" alt="제품구성"></div>
+  <ul class="chk"><li>PCAP 터치스크린</li><li>분해조립이 쉬운 유지보수</li></ul>
+  <a class="cta" href="tel:15516299">이 상품 전화 문의 1551-6299</a>
+ </section>
+
+ <section class="detail" id="d-n250">
+  <h3>포스기 N250</h3><p class="mod">모델 N250</p>
+  <div class="pics"><img src="img/n250_main.jpg" alt=""><img src="img/n250_cpu.jpg" alt=""></div>
+  <ul class="chk"><li>Intel N97 CPU 탑재 (이미지 표기: 기존 E-200/E-250 대비 34% 성능 향상)</li><li>팬리스 방열 구조</li></ul>
+  <div class="pics one"><img src="img/imu_b.jpg" alt="디스플레이 옵션"></div>
+  <a class="cta" href="tel:15516299">이 상품 전화 문의 1551-6299</a>
+ </section>
+
+ <section class="detail" id="d-nc8000">
+  <h3>나이스정보통신 유선 카드단말기</h3><p class="mod">모델 NC-8000QN(PKG) · 애플페이, NFC 결제 가능</p>
+  <div class="pics"><img src="img/nc8000_main.jpg" alt=""></div>
+  <ul class="chk"><li>IC 카드 결제</li><li>애플페이(NFC) 결제</li><li>QR/바코드 결제</li><li>WiFi 연결 가능 (이미지 표기)</li></ul>
+  <a class="cta" href="tel:15516299">이 상품 전화 문의 1551-6299</a>
+ </section>
+
+ <section class="detail" id="d-connect">
+  <h3>네이버 커넥트 결제기</h3><p class="mod">카드·스마트폰 없이도 결제, 모든 결제방식 지원</p>
+  <div class="pics one"><img src="img/connect_p1.jpg" alt=""><img src="img/connect_p2.jpg" alt=""></div>
+  <ul class="chk"><li>페이스사인, QR/바코드, 삼성페이, 애플페이 결제</li><li>쿠폰 노출, 키워드 리뷰 등록, 포인트 적립을 기기에서 바로</li><li>결제 직후 네이버 리뷰로 이어지는 단말기 (네이버페이 발표 기준)</li></ul>
+  <a class="cta" href="tel:15516299">이 상품 전화 문의 1551-6299</a>
+ </section>
+</div>
+
+<!-- FAQ -->
+<section><div class="wrap">
+ <div class="center"><h2 class="t">자주 물어보시는 질문</h2></div>
+ <div class="faq" style="max-width:820px;margin:20px auto 0">
+  <details><summary>설치는 어느 지역까지 가능한가요?</summary><p>전국 설치가 가능합니다. 지역은 전화로 알려 주시면 일정을 안내해 드립니다.</p></details>
+  <details><summary>상담 가능한 시간은 언제인가요?</summary><p>평일 09:00–21:00, 토요일 10:00–20:00, 일요일·공휴일 10:00–18:00 입니다.</p></details>
+  <details><summary>설치 후 고장이 나면 어떻게 하나요?</summary><p>A/S 번호 1670-5499 으로 접수해 주세요. 전화 상담, 원격제어, 현장 방문 순서로 처리합니다.</p></details>
+  <details><summary>가격은 어떻게 알 수 있나요?</summary><p>매장 환경과 구성에 따라 달라 전화·카카오톡 상담으로 견적을 안내해 드립니다.</p></details>
+  <details><summary>카드단말기는 어떤 회사 제품을 쓸 수 있나요?</summary><p>나이스, 토스, 네이버 커넥트를 취급합니다.</p></details>
+ </div>
+</div></section>
+
+<!-- 문의 -->
+<section id="contact" style="padding-top:0"><div class="wrap">
+ <div class="ctab">
+  <h2 class="t">견적·설치 문의는 <em>전화 한 통</em>으로</h2>
+  <span class="num">1551-6299</span>
+  <p class="sm">직통 010-3954-9183 · 설치 가능 지역 전국</p>
+  <a class="btn y" href="tel:15516299">전화 걸기</a><a class="btn" href="https://pf.kakao.com/_fcxafK" target="_blank" rel="noopener">카카오톡 상담</a>
+  <p class="hours">평일 09:00–21:00 · 토 10:00–20:00 · 일·공휴일 10:00–18:00</p>
+ </div>
+</div></section>
+
+<section id="as" style="padding-top:0"><div class="wrap">
+ <div class="ctab" style="background:#fff;border:1px solid var(--line)">
+  <h2 class="t">A/S 안내</h2>
+  <p class="sm">설치 후 고장·문의는 고객센터로 연락해 주세요. 전화 → 원격 → 현장 순서로 처리합니다.</p>
+  <a class="btn" href="tel:16705499">A/S 전화 1670-5499</a>
+ </div>
+</div></section>
+
+<section id="about" style="padding-top:0"><div class="wrap">
+ <div class="eyebrow">회사소개</div><h2 class="t">포스, 키오스크, 무선호출, 주변기기까지</h2>
+ <p class="lead">매장운영에 필요한 모든 장비와 솔루션을 포스리버에서 한 번에 준비하실 수 있습니다.</p>
+ <table style="max-width:720px">
+  <tr><th>상호</th><td>포스리버 (POSRIVER)</td></tr>
+  <tr><th>대표</th><td>김동형</td></tr>
+  <tr><th>취급</th><td>키오스크(하나시스 · SJK/PSK 시리즈) · 포스기 · 카드단말기(나이스·토스·네이버 커넥트)</td></tr>
+  <tr><th>설치 지역</th><td>전국</td></tr>
+ </table>
+</div></section>
+
+<footer>
+ <div class="wrap">
+  <div class="fl"><a href="#as">A/S 안내</a><a href="#about">회사소개</a><a href="#contact">견적 및 설치문의</a></div>
+  <p><b>상호명</b> 포스리버 &nbsp;|&nbsp; <b>대표</b> 김동형 &nbsp;|&nbsp; <b>사업자등록번호</b> 149-04-00851</p>
+  <p><b>주소</b> 서울시 영등포구 당산동4가 86-1, 당산SK V1센터 E동 902호</p>
+  <p><b>이메일</b> posriver0807@naver.com &nbsp;|&nbsp; <b>상담</b> 1551-6299 &nbsp;|&nbsp; <b>직통</b> 010-3954-9183 &nbsp;|&nbsp; <b>A/S</b> 1670-5499</p>
+  <p>평일 09:00–21:00 · 토 10:00–20:00 · 일·공휴일 10:00–18:00</p>
+  <p style="margin-top:8px">Copyright 포스리버 POSRIVER. 이 화면은 1차 시안입니다.</p>
+ </div>
+</footer>
+
+<div class="float"><a href="#top"><span>&uarr;</span>처음으로</a><a class="k" href="https://pf.kakao.com/_fcxafK" target="_blank" rel="noopener"><span>💬</span>카톡상담</a></div>
+
+<div class="bar"><form id="f" onsubmit="return send()">
+ <div class="t"><b>포스·키오스크·카드단말기</b> 등<br>맞춤 견적 상담</div>
+ <input type="tel" id="ph" placeholder="010-" inputmode="tel" required>
+ <button type="submit">무료 상담 신청</button>
+ <label><input type="checkbox" required> 개인정보 수집 및 이용 동의 (상담 연락 목적)</label>
+ <a class="tel" href="tel:15516299">또는 전화 1551-6299</a>
+</form></div>
+
+<script>
+document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>{
+ document.querySelectorAll('#tabs button,.pane').forEach(x=>x.classList.remove('on'));
+ b.classList.add('on');document.getElementById(b.dataset.p).classList.add('on');});
+// 시안 단계: 신청 접수 서버는 아직 없음 → 메일 앱으로 넘김. 배포 때 접수 방식 확정 필요
+function send(){var p=document.getElementById('ph').value;
+ location.href='mailto:posriver0807@naver.com?subject='+encodeURIComponent('견적 상담 신청')+'&body='+encodeURIComponent('연락처: '+p);return false;}
+</script>
+</body>
+</html>
